@@ -21,35 +21,44 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.easyrules.spring;
+package org.easyrules.core;
 
-import org.easyrules.annotation.Rule;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.easyrules.annotation.Action;
+import org.easyrules.annotation.Condition;
+import org.easyrules.api.RulesEngine;
+import org.junit.Test;
 
-import java.lang.annotation.Inherited;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Annotation that turns a POJO into:
- *
- * <ul>
- *     <li>an Easy Rules rule</li>
- *     <li>a Spring prototype-scoped bean</li>
- * </ul>
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
+public class AnnotationInheritanceTest {
 
-@Inherited
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-@Rule
-@Component
-@Scope("prototype")
-@Deprecated
-public @interface SpringRule {
+    @Test
+    public void annotationsShouldBeInherited() throws Exception {
+        MyChildRule myChildRule = new MyChildRule();
+        RulesEngine rulesEngine = RulesEngineBuilder.aNewRulesEngine().build();
+        rulesEngine.registerRule(myChildRule);
+        rulesEngine.fireRules();
+
+        assertThat(myChildRule.isExecuted()).isTrue();
+    }
+
+    @org.easyrules.annotation.Rule
+    class MyBaseRule {
+        protected boolean executed;
+        @Condition
+        public boolean when() {
+            return true;
+        }
+        @Action
+        public void then() {
+            executed = true;
+        }
+        public boolean isExecuted() {
+            return executed;
+        }
+    }
+
+    class MyChildRule extends MyBaseRule {
+
+    }
 }
