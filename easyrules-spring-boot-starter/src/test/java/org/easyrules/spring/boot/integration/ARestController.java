@@ -21,19 +21,27 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.easyrules.annotation;
+package org.easyrules.spring.boot.integration;
 
-import java.lang.annotation.*;
+import org.easyrules.api.RulesEngine;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Annotation to mark the method to execute to get rule priority.
- * Must annotate any public method with no arguments and that returns an integer value.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
+@RestController
+public class ARestController {
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Priority {
+	@Autowired
+	private DummyRule dummyRule;
 
+	@Autowired
+	private RulesEngine rulesEngine;
+
+	@RequestMapping ("/greeting")
+	public String greeting(@RequestParam (value = "name", defaultValue = "World") String name) {
+		rulesEngine.registerRule(dummyRule);
+		rulesEngine.fireRules();
+		return String.format("Hello classes behind proxies and easy rules %s", name);
+	}
 }

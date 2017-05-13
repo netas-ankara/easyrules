@@ -126,7 +126,7 @@ class RuleProxy implements InvocationHandler {
 
         Method[] methods = getMethods();
         for (Method method : methods) {
-            if (method.isAnnotationPresent(Priority.class)) {
+            if (Utils.isAnnotationPresent(method,Priority.class)) {
                 priority = (Integer) method.invoke(target);
                 break;
             }
@@ -137,7 +137,7 @@ class RuleProxy implements InvocationHandler {
     private Method getConditionMethod() {
         Method[] methods = getMethods();
         for (Method method : methods) {
-            if (method.isAnnotationPresent(Condition.class)) {
+            if (Utils.isAnnotationPresent(method,Condition.class)) {
                 return method;
             }
         }
@@ -148,8 +148,8 @@ class RuleProxy implements InvocationHandler {
         Method[] methods = getMethods();
         Set<ActionMethodOrderBean> actionMethodBeans = new TreeSet<>();
         for (Method method : methods) {
-            if (method.isAnnotationPresent(Action.class)) {
-                Action actionAnnotation = method.getAnnotation(Action.class);
+            if (Utils.isAnnotationPresent(method,Action.class)) {
+                Action actionAnnotation = Utils.findAnnotation(method,Action.class);
                 int order = actionAnnotation.order();
                 actionMethodBeans.add(new ActionMethodOrderBean(method, order));
             }

@@ -130,7 +130,7 @@ class RuleDefinitionValidator {
         Method[] methods = getMethods(rule);
         List<Method> annotatedMethods = new ArrayList<>();
         for (Method method : methods) {
-            if (method.isAnnotationPresent(annotation)) {
+            if (Utils.isAnnotationPresent(method,annotation)) {
                 annotatedMethods.add(method);
             }
         }

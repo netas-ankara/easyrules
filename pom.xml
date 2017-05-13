@@ -10,7 +10,7 @@
 
     <groupId>org.easyrules</groupId>
     <artifactId>easyrules</artifactId>
-    <version>2.5.0-SNAPSHOT</version>
+    <version>NETAS-1.0.0-RELEASE</version>
 
     <modules>
         <module>easyrules-archetype</module>
@@ -247,5 +247,12 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>internal-repository</id>
+            <url>http://nexus.tge.netas.com.tr/nexus/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>
 
 </project>

@@ -21,19 +21,26 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.easyrules.annotation;
+package org.easyrules.spring.boot.integration;
 
-import java.lang.annotation.*;
+import org.easyrules.annotation.Action;
+import org.easyrules.annotation.Condition;
+import org.easyrules.spring.SpringRule;
 
-/**
- * Annotation to mark the method to execute to get rule priority.
- * Must annotate any public method with no arguments and that returns an integer value.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
+@SpringRule
+public class DummyRule {
+	@Condition
+	public boolean when() {
+		return true;
+	}
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Priority {
+	@Action (order = 1)
+	public void then() throws Exception {
+		System.out.println("Hey, I'm managed by Spring 1");
+	}
 
+	@Action (order = 2)
+	public void andThen() {
+		System.out.println("Hey, I'm managed by Spring 2");
+	}
 }

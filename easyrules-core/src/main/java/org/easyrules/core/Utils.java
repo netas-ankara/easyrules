@@ -25,6 +25,7 @@ package org.easyrules.core;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -32,6 +33,8 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+
+import org.springframework.core.annotation.AnnotationUtils;
 
 import static java.util.Arrays.asList;
 
@@ -88,22 +91,19 @@ final class Utils {
     }
 
     static <A extends Annotation> A findAnnotation(final Class<A> targetAnnotation, final Class<?> annotatedType) {
+        return AnnotationUtils.findAnnotation(annotatedType,targetAnnotation);
+    }
 
-        A foundAnnotation = annotatedType.getAnnotation(targetAnnotation);
-        if (foundAnnotation == null) {
-            for (Annotation annotation : annotatedType.getAnnotations()) {
-                Class<? extends Annotation> annotationType = annotation.annotationType();
-                if (annotationType.isAnnotationPresent(targetAnnotation)) {
-                    foundAnnotation = annotationType.getAnnotation(targetAnnotation);
-                    break;
-                }
-            }
-        }
-        return foundAnnotation;
+    static <A extends Annotation> A findAnnotation(Method method, Class<A> annotationType){
+        return AnnotationUtils.findAnnotation(method,annotationType);
     }
 
     static boolean isAnnotationPresent(final Class<? extends Annotation> targetAnnotation, final Class<?> annotatedType) {
         return findAnnotation(targetAnnotation, annotatedType) != null;
+    }
+
+    static <A extends Annotation> boolean isAnnotationPresent(Method method, Class<A> annotationType) {
+        return findAnnotation(method,annotationType) != null;
     }
 
 }

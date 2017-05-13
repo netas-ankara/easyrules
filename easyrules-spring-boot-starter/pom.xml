@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.easyrules</groupId>
         <artifactId>easyrules</artifactId>
-        <version>2.5.0-SNAPSHOT</version>
+        <version>NETAS-1.0.0-RELEASE</version>
     </parent>
 
     <artifactId>easyrules-spring-boot-starter</artifactId>
@@ -77,6 +77,16 @@
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

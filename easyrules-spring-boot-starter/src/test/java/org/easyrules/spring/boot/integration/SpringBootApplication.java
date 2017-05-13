@@ -21,19 +21,18 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.easyrules.annotation;
+package org.easyrules.spring.boot.integration;
 
-import java.lang.annotation.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-/**
- * Annotation to mark the method to execute to get rule priority.
- * Must annotate any public method with no arguments and that returns an integer value.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
+@org.springframework.boot.autoconfigure.SpringBootApplication
+@EnableAspectJAutoProxy (proxyTargetClass = true)
+@ComponentScan ("org.easyrules.spring.boot.integration")
+public class SpringBootApplication {
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Priority {
-
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBootApplication.class, args);
+	}
 }
