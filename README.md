@@ -1,6 +1,6 @@
 **The library has been modified so it can work with jdk 1.7 Please consider using the original library. Use this branch if you are out of options.**
 
-**4d88da086d16cd32e54c239140b84228007784c2**
+**[The modification](https://github.com/netas-ankara/easyrules/commit/4d88da086d16cd32e54c239140b84228007784c2)**
 
 ## What is Easy Rules?
 
