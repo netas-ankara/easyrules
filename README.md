@@ -1,3 +1,7 @@
+**The library has been modified so it can work with jdk 1.7 Please consider using the original library. Use this branch if you are out of options.**
+
+**4d88da086d16cd32e54c239140b84228007784c2**
+
 ## What is Easy Rules?
 
 Easy Rules is a Java rules engine inspired by an article called *"[Should I use a Rules Engine?](http://martinfowler.com/bliki/RulesEngine.html)"* of [Martin Fowler](http://martinfowler.com/) in which Martin says:
