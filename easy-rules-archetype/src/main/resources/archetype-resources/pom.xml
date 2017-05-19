@@ -9,7 +9,7 @@
     <dependency>
       <groupId>org.jeasy</groupId>
       <artifactId>easy-rules-core</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>NETAS-1.0.4.v3_for_1_7-RELEASE</version>
     </dependency>
   </dependencies>
 </project>

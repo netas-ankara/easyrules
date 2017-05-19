@@ -30,9 +30,9 @@ import org.jeasy.rules.annotation.Condition;
 import org.jeasy.rules.annotation.Priority;
 import org.jeasy.rules.api.Rule;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.lang.reflect.Proxy;
 import java.util.*;
 import java.util.logging.Logger;
@@ -116,24 +116,25 @@ public class RuleProxy implements InvocationHandler {
         return null;
     }
 
-    private List<Object> getActualParameters(Method method, Facts facts) {
-        Parameter[] parameters = method.getParameters(); // validated upfront
-        List<Object> actualParameters = new ArrayList<>();
-        for (Parameter parameter : parameters) {
-            Fact annotation = parameter.getAnnotation(Fact.class); // validated upfront
-            if (annotation == null) { // validated upfront, there may be only one parameter not annotated and which is of type Facts.class
-                actualParameters.add(facts);
-            } else {
-                String factName = annotation.value();
-                Object fact = facts.get(factName);
-                if (fact == null) {
-                    throw new RuntimeException(String.format("No fact named %s found in known facts", factName));
-                }
-                actualParameters.add(fact);
-            }
-        }
-        return actualParameters;
-    }
+	private List<Object> getActualParameters(Method method, Facts facts) {
+		List<Object> actualParameters = new ArrayList<>();
+
+		Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+		for(Annotation[] ann : parameterAnnotations){
+			if(ann.length == 1){
+				String factName = ((Fact) (ann[0])).value();
+				Object fact = facts.get(factName);
+				if(fact == null){
+					throw new RuntimeException(String.format("No fact named %s found in known facts", factName));
+				}
+				actualParameters.add(fact);
+			} else {
+				actualParameters.add(facts);
+			}
+		}
+
+		return actualParameters;
+	}
 
     private int compareTo(final Rule otherRule) throws Exception {
         String otherName = otherRule.getName();
